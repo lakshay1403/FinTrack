@@ -56,8 +56,15 @@ const userController = {
             email: user.email,
             username: user.username
         });
-    })
+    }),
     //!Profile
+    profile: asyncHandler(async(req,res) => {
+        const user = await User.findById(req.user);
+        if(!user){
+            throw new Error('User not found');
+        }
+        res.json({user: user.username, email: user.email});
+    })
 };
 
 

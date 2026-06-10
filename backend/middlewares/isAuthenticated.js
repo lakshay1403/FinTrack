@@ -1,0 +1,23 @@
+const jwt = require('jsonwebtoken');
+
+const isAuthenticated = async (req,res,next) => {
+    const headerObj  = req.headers;
+    const token = headerObj?.authorization?.split(' ')[1]
+    const verifyToken = jwt.verify(token, 'lakshay', (err, decoded)=>{
+        if(err){
+            return false;
+        }else{
+            return decoded;
+        }
+    });
+    if(verifyToken){
+        //Save the user in req object
+        req.user = verifyToken.id;
+         next();
+    }else{
+        const err = new Error('Token expired, login again');
+        next(err);
+    }
+};
+
+module.exports = isAuthenticated;
