@@ -5,6 +5,6 @@ const transactionRoute = express.Router();
 
 
 transactionRoute.post('/api/v1/transactions/create', isAuthenticated, TransactionController.create);
-transactionRoute.get('/api/v1/transactions/lists', isAuthenticated, TransactionController.lists);
+transactionRoute.get('/api/v1/transactions/lists', isAuthenticated, TransactionController.getFilteredTransactions);
 
 module.exports = transactionRoute;
