@@ -5,6 +5,7 @@ const app = express();
 const mongoose = require('mongoose');
 const userRoute = require('./routes/userRoute');
 const errorHandler = require('./middlewares/errorhandler');
+const categoryRoute = require('./routes/categoryRoute');
 
 
 const connectDB = async () => {
@@ -23,6 +24,7 @@ connectDB();
 app.use(express.json());  //pass incoming json data
 //!Routes
 app.use('/', userRoute);
+app.use('/', categoryRoute);
 //Error
 app.use(errorHandler);
 const PORT = process.env.PORT || 3000;
