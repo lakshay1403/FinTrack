@@ -2,9 +2,11 @@ import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { loginAPI } from "../../services/users/userServices";
 import AlertMessage from "../Alert/AlertMessage";
+import { loginAction } from "../../redux/Slice/authSlice";
 
 const validationSchema = Yup.object({
   email: Yup.string().email("Invalid").required("Email is required"),
@@ -12,6 +14,7 @@ const validationSchema = Yup.object({
 });
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
  const {mutateAsync, isError, isPending, error, isSuccess} = useMutation({
     mutationFn: loginAPI,
     mutationKey: ['login']
@@ -25,7 +28,8 @@ const LoginForm = () => {
     validationSchema,
     onSubmit:(values) => {
       mutateAsync(values).then((data)=>{
-        console.log(data);
+        dispatch(loginAction(data));
+        localStorage.setItem('userInfo', JSON.stringify(data));
       }).catch((err) => {
         console.log(err);
       })
