@@ -7,6 +7,7 @@ const userRoute = require('./routes/userRoute');
 const errorHandler = require('./middlewares/errorhandler');
 const categoryRoute = require('./routes/categoryRoute');
 const transactionRoute = require('./routes/transactionRoute');
+const cors = require('cors');
 
 
 const connectDB = async () => {
@@ -20,7 +21,11 @@ const connectDB = async () => {
 };
 
 connectDB();
-
+//!Cors config
+const corsOptions = {
+    origin:['http://localhost:5173'],
+};
+app.use(cors(corsOptions));
 //!Middlewares
 app.use(express.json());  //pass incoming json data
 //!Routes

@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import HeroSection from "../Components/Home/HomePage"
-import PublicNavbar from "../Components/Navbar/PublicNavbar";
-import LoginForm from "../Components/Users/Login";
-import RegistrationForm from "../Components/Users/Register";
+import HeroSection from "../src/Components/Home/HomePage"
+import PublicNavbar from "../src/Components/Navbar/PublicNavbar";
+import LoginForm from "../src/Components/Users/Login";
+import RegistrationForm from "../src/Components/Users/Register";
 
 function App() {
   return (
