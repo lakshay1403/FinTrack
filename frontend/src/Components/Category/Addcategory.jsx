@@ -12,7 +12,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import AlertMessage from "../Alert/AlertMessage";
-import { AddCategoryAPI } from "../../services/category/add-category";
+import { AddCategoryAPI } from "../../services/category/CategoryService";
 
 const validationSchema = Yup.object({
   name: Yup.string()

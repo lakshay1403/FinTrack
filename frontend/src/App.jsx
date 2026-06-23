@@ -6,6 +6,7 @@ import RegistrationForm from "../src/Components/Users/Register";
 import PrivateNavbar from "./Components/Navbar/PrivateNavbar";
 import { useSelector } from "react-redux";
 import AddCategory from "./Components/Category/Addcategory";
+import CategoriesList from "./Components/Category/CategoryList";
 
 
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/Login" element = {<LoginForm/>} />
         <Route path="/register" element = {<RegistrationForm/>} />
         <Route path="/add-category" element = {<AddCategory/>} />
+        <Route path="/categories" element = {<CategoriesList/>} />
       </Routes>
     </BrowserRouter>
   );

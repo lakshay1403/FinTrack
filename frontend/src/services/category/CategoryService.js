@@ -15,10 +15,11 @@ export const AddCategoryAPI = async({type,name}) => {
     });
     return response.data;
 };
-export const ListCategoryAPI = async({type,name}) => {
+export const ListCategoryAPI = async() => {
     const response = await axios.get(`${BASE_URL}/categories/lists`,{
-        type,
-        name,
+        headers:{
+            Authorization: `Bearer ${token}`,
+        }
     });
     return response.data;
 };
