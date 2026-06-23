@@ -5,6 +5,11 @@ import LoginForm from "../src/Components/Users/Login";
 import RegistrationForm from "../src/Components/Users/Register";
 import PrivateNavbar from "./Components/Navbar/PrivateNavbar";
 import { useSelector } from "react-redux";
+import AddCategory from "./Components/Category/Addcategory";
+
+
+
+
 function App() {
   const user = useSelector((state)=> state?.auth?.user);
   return (
@@ -14,6 +19,7 @@ function App() {
         <Route path="/" element={<HeroSection />} />
         <Route path="/Login" element = {<LoginForm/>} />
         <Route path="/register" element = {<RegistrationForm/>} />
+        <Route path="/add-category" element = {<AddCategory/>} />
       </Routes>
     </BrowserRouter>
   );
