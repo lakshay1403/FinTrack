@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@tanstack/react-query";
@@ -7,6 +6,8 @@ import { FaEnvelope, FaLock } from "react-icons/fa";
 import { loginAPI } from "../../services/users/userServices";
 import AlertMessage from "../Alert/AlertMessage";
 import { loginAction } from "../../redux/Slice/authSlice";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const validationSchema = Yup.object({
   email: Yup.string().email("Invalid").required("Email is required"),
@@ -14,6 +15,7 @@ const validationSchema = Yup.object({
 });
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
  const {mutateAsync, isError, isPending, error, isSuccess} = useMutation({
     mutationFn: loginAPI,
@@ -35,6 +37,13 @@ const LoginForm = () => {
       })
     },
   });
+      useEffect(()=>{
+      setTimeout(()=>{
+        if(isSuccess){
+          navigate('/profile');
+        }
+      },2000);
+    },[isError, isPending, error, isSuccess]);
   return (
     <form onSubmit={formik.handleSubmit} className="max-w-md mx-auto my-10 bg-white p-6 rounded-xl shadow-lg space-y-6 border border-gray-200">
       <h2 className="text-3xl font-semibold text-center text-gray-800">
