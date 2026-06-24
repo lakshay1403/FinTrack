@@ -19,7 +19,7 @@ const TransactionController = {
     }),
     getFilteredTransactions: asyncHandler(async (req,res) => {
         const {startDate, endDate, type, category } = req.query;
-       let filters = {user: req.user, date: startDate,};
+       let filters = {user: req.user};
        if(startDate){
         filters.date = {...filters.date, $gte: new Date(startDate)};
        }

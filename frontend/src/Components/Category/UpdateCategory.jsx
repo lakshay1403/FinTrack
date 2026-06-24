@@ -9,10 +9,9 @@ import {
 } from "react-icons/fa";
 import { SiDatabricks } from "react-icons/si";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { UpdateCategoryAPI } from "../../services/category/CategoryService";
 import AlertMessage from "../Alert/AlertMessage";
-import { AddCategoryAPI } from "../../services/category/CategoryService";
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -22,24 +21,25 @@ const validationSchema = Yup.object({
     .oneOf(["income", "expense"]),
 });
 
-const AddCategory = () => {
+const UpdateCategory = () => {
+    const {id} = useParams();
     const navigate = useNavigate();
     const {mutateAsync, isPending, isError, error, isSuccess} = useMutation({
-        mutationFn: AddCategoryAPI,
-        mutationKey:['add-category'],
+        mutationFn: UpdateCategoryAPI,
+        mutationKey: ["update-category"],
     });
-    const formik = useFormik({
+  const formik = useFormik({
     initialValues: {
       type: "",
       name: "",
     },
-    validationSchema,
     onSubmit: (values) => {
-        mutateAsync(values).then((data)=>{
-          navigate("/categories");
-        }).catch((err) => {
-            console.log(err);
-        })
+        const data = {
+            ...values, id,
+        }
+        mutateAsync(data).then((data)=> {
+            navigate("/categories");
+        }).catch((e)=>{console.log(e);})
     },
   });
 
@@ -50,7 +50,7 @@ const AddCategory = () => {
     >
       <div className="text-center">
         <h2 className="text-2xl font-semibold text-gray-800">
-          Add New Category
+          Update Category
         </h2>
         <p className="text-gray-600">Fill in the details below.</p>
       </div>
@@ -67,7 +67,7 @@ const AddCategory = () => {
       {isSuccess && (
         <AlertMessage
           type="success"
-          message="Category added successfully, redirecting..."
+          message="Category updated successfully, redirecting..."
         />
       )}
       {/* Category Type */}
@@ -116,10 +116,10 @@ const AddCategory = () => {
         type="submit"
         className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-200 transform"
       >
-        Add Category
+        Update Category
       </button>
     </form>
   );
 };
 
-export default AddCategory;
+export default UpdateCategory;
