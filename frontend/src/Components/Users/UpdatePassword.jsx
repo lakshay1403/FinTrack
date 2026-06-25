@@ -2,21 +2,27 @@ import React, { useState } from "react";
 import { AiOutlineLock } from "react-icons/ai";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useMutation } from "@tanstack/react-query";
+import { UpdatePasswordAPI } from "../../services/users/userServices";
 const validationSchema = Yup.object({
   password: Yup.string()
     .min(5, "Password must be at least 5 characters long")
     .required("Email is required"),
 });
 const UpdatePassword = () => {
+  const {mutateAsync, isError,isPending,error,isSuccess} = useMutation({
+    mutationFn: UpdatePasswordAPI,
+    mutationKey: ["update-password"],
+  });
   const formik = useFormik({
     initialValues: {
-      password: "123456",
+      password: "",
     },
     // Validations
     validationSchema,
     //Submit
     onSubmit: (values) => {
-      console.log(values);
+      mutateAsync(values.password).then(()=>{}).catch((e)=>{console.log(e);});
     },
   });
   return (
