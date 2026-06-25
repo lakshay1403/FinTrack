@@ -14,6 +14,7 @@ const TransactionController = {
             category,
             amount,
             description,
+            date,
         });
         res.status(201).json(transaction);
     }),
