@@ -11,6 +11,7 @@ import UpdateCategory from "./Components/Category/UpdateCategory";
 import TransactionForm from "./Components/Transactions/TransactionForm";
 import Dashboard from "./Components/Users/Dashboard";
 import UserProfile from "./Components/Users/UserProfile";
+import { AuthRoute } from "./Components/Auth/AuthRoute";
 
 
 
@@ -23,12 +24,24 @@ function App() {
         <Route path="/" element={<HeroSection />} />
         <Route path="/Login" element = {<LoginForm/>} />
         <Route path="/register" element = {<RegistrationForm/>} />
-        <Route path="/add-category" element = {<AddCategory/>} />
-        <Route path="/categories" element = {<CategoriesList/>} />
-        <Route path="/update-category/:id" element = {<UpdateCategory/>} />
-        <Route path="/add-transaction" element = {<TransactionForm/>}/>
-        <Route path="/dashboard" element = {<Dashboard/>} />
-        <Route path="/profile" element={<UserProfile/>}/>
+        <Route path="/add-category" element = {<AuthRoute>
+          <AddCategory/>
+        </AuthRoute>} />
+        <Route path="/categories" element = {<AuthRoute>
+          <CategoriesList/>
+        </AuthRoute>} />
+        <Route path="/update-category/:id" element = {<AuthRoute>
+          <UpdateCategory/>
+        </AuthRoute>} />
+        <Route path="/add-transaction" element = {<AuthRoute>
+          <TransactionForm/>
+        </AuthRoute>}/>
+        <Route path="/dashboard" element = {<AuthRoute>
+          <Dashboard/>
+        </AuthRoute>} />
+        <Route path="/profile" element={<AuthRoute>
+          <UserProfile/>
+        </AuthRoute>}/>
       </Routes>
     </BrowserRouter>
   );

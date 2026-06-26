@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BASE_URL } from "../../utils/url";
 import { getUserFromStorage } from "../../utils/GetUserFromStorage";
+
 const token = getUserFromStorage();
 
 //!Login
@@ -28,7 +29,7 @@ export const RegisterAPI = async({email,password,username}) => {
 export const UpdatePasswordAPI = async(password) => {
     const response = await axios.put(`${BASE_URL}/users/change-password`,
     {
-        password,
+        newPassword: password,
     },{
         headers: {
             Authorization: `Bearer ${token}`,

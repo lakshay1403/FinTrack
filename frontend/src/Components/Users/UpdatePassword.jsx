@@ -4,12 +4,19 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@tanstack/react-query";
 import { UpdatePasswordAPI } from "../../services/users/userServices";
+import { useDispatch } from "react-redux";
+import { logoutAction } from "../../redux/Slice/authSlice";
+import AlertMessage from "../Alert/AlertMessage";
+
 const validationSchema = Yup.object({
   password: Yup.string()
     .min(5, "Password must be at least 5 characters long")
-    .required("Email is required"),
+    .required("Password is required"),
 });
+
+
 const UpdatePassword = () => {
+  const dispatch = useDispatch();
   const {mutateAsync, isError,isPending,error,isSuccess} = useMutation({
     mutationFn: UpdatePasswordAPI,
     mutationKey: ["update-password"],
@@ -22,7 +29,11 @@ const UpdatePassword = () => {
     validationSchema,
     //Submit
     onSubmit: (values) => {
-      mutateAsync(values.password).then(()=>{}).catch((e)=>{console.log(e);});
+      mutateAsync(values.password).then((data)=>{
+        //logout the user
+        dispatch(logoutAction());
+        localStorage.removeItem("userInfo");
+      }).catch((e)=>{console.log(e);});
     },
   });
   return (
@@ -36,13 +47,23 @@ const UpdatePassword = () => {
           >
             New Password
           </label>
+          {isPending && <AlertMessage type="loading" message="Updating...." />}
+          {isError && (
+            <AlertMessage type="error" message={error.response.data.message} />
+          )}
+          {isSuccess && (
+            <AlertMessage
+              type="success"
+              message="Password updated successfully"
+            />
+          )}
           <div className="flex items-center border-2 py-2 px-3 rounded">
             <AiOutlineLock className="text-gray-400 mr-2" />
             <input
               id="new-password"
               type="password"
               name="newPassword"
-              {...formik.getFieldProps("email")}
+              {...formik.getFieldProps("password")}
               className="outline-none flex-1"
               placeholder="Enter new password"
             />
